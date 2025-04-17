@@ -1,0 +1,42 @@
+name: LLM + Custom Tool Flow
+description: LLM -> custom Python function (as a tool) -> LLM again
+
+input_schema:
+  type: object
+  properties:
+    question:
+      type: string
+
+tools:
+  - name: process_text
+    type: function
+    function:
+     parameters:
+        type: object
+        properties:
+          text:
+            type: string
+            description: Content of the text
+    code: |
+      def process_text(text: str) -> str:
+          # Example logic
+          return text.upper() + " yo yo💡"
+
+main:
+  # Step 1: Initial LLM call
+  - prompt: |
+      $ f"""Here's a question: {steps[0].input.topic}
+
+      Respond concisely."""
+    unwrap: true
+
+  # Step 2: Run custom function as a tool
+  - tool: process_text
+    arguments:
+      text: $ _
+
+  # Step 3: Second LLM call using transformed output
+  - prompt: |
+      $ f"""Here's a changed thought: _
+
+      Based on that, detect the changes made"""

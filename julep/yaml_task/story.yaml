@@ -1,0 +1,8 @@
+name: Story Generator
+description: Generate a short story based on a given topic
+main:
+- prompt:
+  - role: system
+    content: You are a creative story writer.
+  - role: user
+    content: $ f'Write a short story about {steps[0].input.topic}'

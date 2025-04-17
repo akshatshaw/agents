@@ -1,0 +1,24 @@
+name: Summarize Document
+description: Create a concise summary of any document
+input_schema:
+  type: object
+  properties:
+    document_text:
+      type: string
+      description: The text to summarize
+
+main:
+  - prompt: |-
+        $ f'''Analyze the following text and create a summary:
+        {steps[0].input.topic}'''
+    unwrap: true
+  - evaluate:
+      too_long: $ len(_) > 500
+  - if: $ _.too_long
+    then:
+      prompt: |-
+        $ f'''Make the summary more concise:
+        {steps[0].output}'''
+    else: 
+      evaluate:
+        content: $ steps[0].output

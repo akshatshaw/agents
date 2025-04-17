@@ -1,0 +1,40 @@
+name: Study Reminder Bot
+description: Sends a reminder email every 15 minutes to help with study consistency.
+
+input_schema:
+  type: object
+  properties:
+    from:
+      type: string
+    to:
+      type: string
+    subject:
+      type: string
+    body:
+      type: string
+    api:
+      type: string
+
+tools:
+- name: send_email
+  type: integration
+  integration:
+    provider: email
+    setup:
+      host: smtp.mailgun.org
+      password: {MAILGUN_PASSWORD}
+      api: $ os.environ['MAILGUN_API']
+      port: 587
+      user: postmaster@sandbox8fb6fbc34368497b877d285ae92db89e.mailgun.org
+
+main:
+# - loop:
+#     interval: 900  # 15 minutes in seconds
+#     steps:
+  - tool: send_email
+    arguments:
+      body: $ _.body
+      from: $ _.from
+      subject: $  _.subject
+      to: $ steps[0].input['from']
+      api: $ _.api
