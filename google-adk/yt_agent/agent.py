@@ -10,8 +10,13 @@ from google.adk.models.lite_llm import LiteLlm
 from google.adk.sessions import InMemorySessionService
 from google.adk.runners import Runner
 from google.genai import types 
-
+import asyncio
 from yt_transcript import *
+import os
+from dotenv import load_dotenv
+load_dotenv() 
+
+api_key = os.environ['GOOGLE_API_KEY'] 
 
 yt_url = "https://www.youtube.com/watch?v=sBuoMkJsMsA"
 
@@ -78,6 +83,5 @@ async def call_agent_async(query: str):
 
 
 if __name__ == "__main__":
-    call_agent_async(f"how to swim? yt_url= {yt_url}")
-
-# text =call_agent_async(f"how to swim? yt_url= {yt_url}")
+    # call_agent_async(f"how to swim? yt_url= {yt_url}")
+    asyncio.run(call_agent_async(f"how to swim? yt_url= {yt_url}"))
