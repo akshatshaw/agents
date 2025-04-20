@@ -1,12 +1,11 @@
 import warnings
-# Ignore all warnings
 warnings.filterwarnings("ignore")
 
 import logging
 logging.basicConfig(level=logging.ERROR)
 
 from google.adk.agents import Agent
-from google.adk.models.lite_llm import LiteLlm
+# from google.adk.models.lite_llm import LiteLlm
 from google.adk.sessions import InMemorySessionService
 from google.adk.runners import Runner
 from google.genai import types 
