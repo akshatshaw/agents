@@ -20,4 +20,3 @@ google-resumable-media==2.7.2
 googleapis-common-protos==1.63.1
 youtube_transcript_api
 litellm
-urllib
