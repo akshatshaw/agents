@@ -53,7 +53,7 @@ def get_youtube_transcript(yt_url : str)-> dict:
     if not video_id:
         raise ValueError("Invalid YouTube URL")
     
-    transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=['en'])
+    transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=['en'], proxies={"https": "https://hvpottox:bz1sfmux9b7n@38.153.152.244:9594"})
     full_text = " ".join([t["text"] for t in transcript])
     return {"result" : full_text}
 
