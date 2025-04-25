@@ -1,11 +1,11 @@
 import requests
 import os
 from dotenv import load_dotenv
-
+import time
 load_dotenv()
 VOICE_API = os.getenv("VOICE_API") 
 
-def tts_tool(text: str, output_filename: str = "output.wav")-> None:
+def tts_tool(text: str)-> None:
     """
     Converts the given text to speech using the Dubverse TTS API and saves the output as a .wav file.
     Args:
@@ -18,7 +18,7 @@ def tts_tool(text: str, output_filename: str = "output.wav")-> None:
     url = "https://audio.dubverse.ai/api/tts"
     payload = {
         "text": text,
-        "speaker_no": 1189,
+        "speaker_no": 1252,
         "config": {
             "use_streaming_response": False,
         },
@@ -29,6 +29,7 @@ def tts_tool(text: str, output_filename: str = "output.wav")-> None:
     }
 
     response = requests.post(url, json=payload, headers=headers)
+    output_filename = f"{time.strftime('%Y-%m-%d_%H-%M-%S')}.mp3"
     if response.status_code == 200:
         with open(output_filename, 'wb') as f:
             f.write(response.content)
