@@ -10,7 +10,7 @@ from google.adk.sessions import InMemorySessionService
 from google.adk.runners import Runner
 from google.genai import types 
 import asyncio
-from utils import tts_tool ,text_to_speech_file
+from utils import tts_tool ,text_to_speech_file # first one is for dubverse and second for elevenlabs
 import os
 from dotenv import load_dotenv
 load_dotenv() 
@@ -26,11 +26,12 @@ root_agent = Agent(
     instruction=(
         "You are a creative storytelling agent.\n"
         "Given an idea from the user, craft a concise and engaging story in Hindi.\n"
-        "Once the story is generated, use the 'tts_tool' to produce the speech output. Pass the story/text generated in the tool and wait for the file to be generated!\n"
-        "Respond only with the story text in Hindi. And pass the story as text in the tool 'tts_tool'\n"
+        "Once the story is generated, use the 'text_to_speech_file' to produce the speech output. Pass the story/text generated in the tool and wait for the file to be generated!\n"
+        "Respond only with the story text in Hindi. And pass the story as text in the tool 'text_to_speech_file'\n"
         "Make sure to pass the hindi story to the tool to genearate audio file. And wait for it to complete."
+        "In the end print the response link of aws s3 from tool."
     ),
-    tools=[tts_tool],
+    tools=[text_to_speech_file], #change this for dubverse/elevenlabs
 )
 
 session_service = InMemorySessionService()

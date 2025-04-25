@@ -3,7 +3,17 @@ import os
 from dotenv import load_dotenv
 import time
 load_dotenv()
+import boto3
 VOICE_API = os.getenv("VOICE_API") 
+
+AWS_KEY_ID = os.getenv("AWS_ACCESS_KEY")
+AWS_SECRET_ID = os.getenv("AWS_SECRET_KEY")
+
+s3 = boto3.client(
+    's3',
+    aws_access_key_id=AWS_KEY_ID,
+    aws_secret_access_key= AWS_SECRET_ID
+)
 
 def tts_tool(text: str)-> None:
     """
@@ -34,6 +44,20 @@ def tts_tool(text: str)-> None:
         with open(output_filename, 'wb') as f:
             f.write(response.content)
         print("File saved!!")
+        
+        bucket_name = "story-agent"
+
+        # Upload to S3
+        s3_key = f"Dubverse/{output_filename}"
+        s3.upload_file(output_filename, bucket_name, s3_key, ExtraArgs={'ACL': 'public-read'})
+
+        # Make file public
+        s3.put_object_acl(ACL='public-read', Bucket=bucket_name, Key=s3_key)
+
+        # Generate public URL
+        url = f"https://{bucket_name}.s3.amazonaws.com/{s3_key}"
+        print("Public File URL:", url)
+        return url
     else:
         print("Error!")
         
@@ -70,19 +94,28 @@ def text_to_speech_file(text: str) -> None:
         ),
     )
 
-    # uncomment the line below to play the audio back
-    # play(response)
-
     # Generating a unique file name for the output MP3 file
-    save_file_path = f"{uuid.uuid4()}.mp3"
+    output_filename = f"{time.strftime('%Y-%m-%d_%H-%M-%S')}.mp3"
 
     # Writing the audio to a file
-    with open(save_file_path, "wb") as f:
+    with open(output_filename, "wb") as f:
         for chunk in response:
             if chunk:
                 f.write(chunk)
 
-    print(f"{save_file_path}: A new audio file was saved successfully!")
+    bucket_name = "story-agent"
+
+    # Upload to S3
+    s3_key = f"ElevenLabs/{output_filename}"
+    s3.upload_file(output_filename, bucket_name, s3_key)
+
+    # Make file public
+    s3.put_object_acl(ACL='public-read', Bucket=bucket_name, Key=s3_key)
+
+    # Generate public URL
+    url = f"https://{bucket_name}.s3.amazonaws.com/{s3_key}"
+    print("Public File URL:", url)
+    return url
 
     # Return the path of the saved audio file
     # return save_file_path
