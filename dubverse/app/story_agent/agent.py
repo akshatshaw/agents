@@ -22,16 +22,16 @@ AGENT_MODEL = "gemini-2.0-flash"
 root_agent = Agent(
     name="hindi_story_agent_v1",
     model=AGENT_MODEL, 
-    description="Generate a Hindi story from a user-provided idea and convert it to speech.",
+    description="Generate a Hindi story under 300 characters from a user-provided idea and convert it to speech.",
     instruction=(
         "You are a creative storytelling agent.\n"
         "Given an idea from the user, craft a concise and engaging story in Hindi.\n"
-        "Once the story is generated, use the 'text_to_speech_file' to produce the speech output. Pass the story/text generated in the tool and wait for the file to be generated!\n"
-        "Respond only with the story text in Hindi. And pass the story as text in the tool 'text_to_speech_file'\n"
+        "Once the story is generated, use the 'tts_tool' to produce the speech output. Pass the story/text generated in the tool and wait for the file to be generated!\n"
+        "Respond only with the story text in Hindi. And pass the story as text in the tool 'tts_tool'\n"
         "Make sure to pass the hindi story to the tool to genearate audio file. And wait for it to complete."
         "In the end print the response link of aws s3 from tool."
     ),
-    tools=[text_to_speech_file], #change this for dubverse/elevenlabs
+    tools=[tts_tool], #change this for dubverse/elevenlabs
 )
 
 session_service = InMemorySessionService()
