@@ -6,7 +6,7 @@ from datetime import datetime
 
 # Constants
 # WEBHOOK_URL = "https://akshatshaw.app.n8n.cloud/webhook-test/c5ce3d8c-8ffb-459b-8105-3946467ce1cd"
-WEBHOOK_URL    =     "https://akshatshaw.app.n8n.cloud/webhook/c5ce3d8c-8ffb-459b-8105-3946467ce1cd"
+WEBHOOK_URL = "https://primary-production-2ef6.up.railway.app/webhook-test/c5ce3d8c-8ffb-459b-8105-3946467ce1cd"
 BEARER_TOKEN = "admin123"
 
 def generate_session_id():
@@ -14,7 +14,7 @@ def generate_session_id():
 
 def send_message_to_llm(session_id, message):
     headers = {
-        "Authorization": f"Bearer {BEARER_TOKEN}",
+        "Authorization": f"{BEARER_TOKEN}",
         "Content-Type": "application/json"
     }
     payload = {
