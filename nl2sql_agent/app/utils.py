@@ -39,9 +39,7 @@ SQL_SAMPLES = [
 
 CUSTOM_INSTRUCTIONS = """
 When generating SQL queries, follow these guidelines:
-• Include driver license details (license_number, issue_date, expiration_date)
 • Format dates according to SQL standards (YYYY-MM-DD)
-• Include vehicle registration details when relevant
 • Use proper table aliases for clarity
 • Include comments explaining complex logic
 • Follow best practices for SQL performance
