@@ -2,7 +2,7 @@ import pandas as pd
 import json
 import asyncio
 from typing import List, Dict, Any
-df = pd.read_csv(r"C:\Users\AKSHAT SHAW\OneDrive - iitr.ac.in\Desktop\Side-Projects\Agents\nl2sql_agent\Copy of Schema_dump_(1)(1).csv")
+df = pd.read_csv(r"nl2sql_agent\Copy of Schema_dump_(1)(1).csv")
     
 
 SCHEMA_SAMPLES = {}
