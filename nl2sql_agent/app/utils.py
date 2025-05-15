@@ -186,13 +186,15 @@ def generate_system_prompt(question: str) -> str:
     
     # Add relevant schema information
     prompt += "## Relevant Database Schema\n"
-    for table_name, table_info in relevant_tables.items():
-        prompt += f"### Table, Description and Columns: {table_name}\n"
+    prompt += f"### Table, Description and Columns: {relevant_tables}\n"
+    
+    # for table_name, table_info in relevant_tables.items():
+    #     prompt += f"### Table, Description and Columns: {table_name}\n"
         # # prompt += f"Description: {table_info['description']}\n"
         # prompt += "Columns:\n"
         # for column in table_info['columns']:
         #     prompt += f"- {column}\n"
-        prompt += "\n"
+        # prompt += "\n"
     
     # Add custom instructions
     prompt += "## Custom Instructions\n"
