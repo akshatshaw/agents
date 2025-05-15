@@ -5,7 +5,7 @@ import os
 from typing import List, Dict, Any
 from vector_store import load_vector_store, build_and_save_vector_store, embedder
 
-df = pd.read_csv(r"C:\Users\AKSHAT SHAW\OneDrive - iitr.ac.in\Desktop\Side-Projects\Agents\nl2sql_agent\app\data\Final_schema.csv")
+df = pd.read_csv("data\Final_schema.csv")
     
 # updated schema with table description 
 SCHEMA_SAMPLES = {}
