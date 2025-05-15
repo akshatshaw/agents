@@ -1,18 +1,26 @@
 import pandas as pd
 import json
 import asyncio
+import os
 from typing import List, Dict, Any
-df = pd.read_csv(r"Copy of Schema_dump_(1)(1).csv")
-    
+from vector_store import load_vector_store, build_and_save_vector_store, embedder
 
+df = pd.read_csv(r"C:\Users\AKSHAT SHAW\OneDrive - iitr.ac.in\Desktop\Side-Projects\Agents\nl2sql_agent\app\data\Final_schema.csv")
+    
+# updated schema with table description 
 SCHEMA_SAMPLES = {}
 for table_name, group in df.groupby('table_name'):
+    description = group['Table description'].dropna().unique()
+    if len(description) > 0:
+        table_description = description[0]
+    else:
+        table_description = f"Schema for {table_name} table"
     SCHEMA_SAMPLES[table_name] = {
         'columns': group['column_name'].tolist(),
-        'description': f"Schema for {table_name} table",
+        'description': table_description,
         'column_details': group.to_dict(orient='records')
-    }
-    
+    } 
+
 
 SQL_SAMPLES = [
     {
@@ -100,6 +108,21 @@ def get_relevant_tables(question: str, schema: Dict[str, Dict[str, Any]]) -> Dic
     
     return relevant_tables
 
+# Search example
+# def search_relevant_tables(query: str, index, table_keys, top_k=3):
+#     query_embedding = embedder.encode([query], normalize_embeddings=True)
+#     D, I = index.search(query_embedding, top_k)
+#     return [table_keys[i] for i in I[0]]
+
+# this search includes the table description
+
+def search_relevant_tables(query: str, index, table_keys, top_k=3):
+    query_embedding = embedder.encode([query], normalize_embeddings=True)
+    D, I = index.search(query_embedding, top_k)
+    results = {table_keys[i]: SCHEMA_SAMPLES[table_keys[i]] for i in I[0]}
+    return results
+
+
 def generate_system_prompt(question: str) -> str:
     """
     Generates a comprehensive system prompt for SQL query generation.
@@ -129,11 +152,26 @@ def generate_system_prompt(question: str) -> str:
         # Returns a detailed markdown prompt with examples, schema, 
         # and instructions for generating a SQL query
     """
+    
+    INDEX_PATH = 'table_index.faiss'
+    METADATA_PATH = 'table_keys.pkl'
+
+    # Check and build if necessary
+    if not (os.path.exists(INDEX_PATH) and os.path.exists(METADATA_PATH)):
+        print("Vector store files not found. Building and saving...")
+        build_and_save_vector_store(SCHEMA_SAMPLES, INDEX_PATH, METADATA_PATH)
+    else:
+        print("Vector store files already exist. Skipping build.")
+
+    # Load 
+    index, table_keys = load_vector_store('table_index.faiss', 'table_keys.pkl')
+
     # Search for similar examples
     similar_examples = search_similar_examples(question, SQL_SAMPLES)
     
     # Get relevant tables
-    relevant_tables = get_relevant_tables(question, SCHEMA_SAMPLES)
+    # relevant_tables = get_relevant_tables(question, SCHEMA_SAMPLES)
+    relevant_tables =search_relevant_tables(question, index, table_keys)
     
     # Build the system prompt
     prompt = "# SQL Query Generation\n\n"
@@ -149,11 +187,11 @@ def generate_system_prompt(question: str) -> str:
     # Add relevant schema information
     prompt += "## Relevant Database Schema\n"
     for table_name, table_info in relevant_tables.items():
-        prompt += f"### Table: {table_name}\n"
-        prompt += f"Description: {table_info['description']}\n"
-        prompt += "Columns:\n"
-        for column in table_info['columns']:
-            prompt += f"- {column}\n"
+        prompt += f"### Table, Description and Columns: {table_name}\n"
+        # # prompt += f"Description: {table_info['description']}\n"
+        # prompt += "Columns:\n"
+        # for column in table_info['columns']:
+        #     prompt += f"- {column}\n"
         prompt += "\n"
     
     # Add custom instructions
