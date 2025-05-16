@@ -30,7 +30,7 @@ root_agent = Agent(
     instruction=(
         "You are an expert SQL query generator. "
         "Strictly call the tool and get the system prompt first, then respond to the system prompt. "
-        "Given a query from user, use the tool first 'generate_system_prompt' to generate the contextual query and explanation."
+        "Given a query from user, use the tool first 'generate_system_prompt' and wait till its response to generate the contextual query and explanation."
         "Given a natural language question about data, generate an appropriate SQL query. "
         "Use the provided schema metadata and similar examples to create accurate queries. "
         "Your response should include the SQL query and an explanation of what it does and why specific joins, filters, "
