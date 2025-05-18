@@ -2,8 +2,15 @@ import pandas as pd
 import json
 import asyncio
 import os
+from dotenv import load_dotenv
+load_dotenv()
 from typing import List, Dict, Any
-from vector_store import load_vector_store, build_and_save_vector_store, embedder
+# from vector_store import load_vector_store, build_and_save_vector_store, embedder
+from pymongo import MongoClient
+from openai import OpenAI
+MONGO_URI = os.getenv("MONGO_URI")
+DB_NAME = "sql_agent"
+COLLECTION_NAME = "test1"
 
 df = pd.read_csv("Final_schema.csv")
     
@@ -116,11 +123,53 @@ def get_relevant_tables(question: str, schema: Dict[str, Dict[str, Any]]) -> Dic
 
 # this search includes the table description
 
-def search_relevant_tables(query: str, index, table_keys, top_k=3):
-    query_embedding = embedder.encode([query], normalize_embeddings=True)
-    D, I = index.search(query_embedding, top_k)
-    results = {table_keys[i]: SCHEMA_SAMPLES[table_keys[i]] for i in I[0]}
+def get_openai_embedding(text: str, model="text-embedding-ada-002") -> list:
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    response = client.embeddings.create(
+        input=text,
+        model=model
+    )
+    return response.data[0].embedding
+
+def search_mongodb_tables(query: str, mongo_uri: str, db_name: str, collection_name: str, top_k: int = 5):
+    # Connect to MongoDB
+    client = MongoClient(mongo_uri)
+    db = client[db_name]
+    collection = db[collection_name]
+
+    # Embed the query
+    query_embedding = get_openai_embedding(query)
+
+    # Perform vector search with $vectorSearch
+    pipeline = [
+        {
+            "$vectorSearch": {
+                "index": "vector_index",  # The name of your Atlas vector index
+                "path": "embedding",
+                "queryVector": query_embedding,
+                "numCandidates": 100,     # Number of candidates to search over
+                "limit": top_k
+            }
+        },
+        {
+            "$project": {
+                "_id": 0,
+                "table_name": 1,
+                "description": 1,
+                "columns": 1,
+                "score": {"$meta": "vectorSearchScore"}
+            }
+        }
+    ]
+
+    results = list(collection.aggregate(pipeline))
     return results
+
+# def search_relevant_tables(query: str, index, table_keys, top_k=3):
+#     query_embedding = embedder.encode([query], normalize_embeddings=True)
+#     D, I = index.search(query_embedding, top_k)
+#     results = {table_keys[i]: SCHEMA_SAMPLES[table_keys[i]] for i in I[0]}
+#     return results
 
 
 def generate_system_prompt(question: str) -> str:
@@ -153,25 +202,25 @@ def generate_system_prompt(question: str) -> str:
         # and instructions for generating a SQL query
     """
     
-    INDEX_PATH = 'table_index.faiss'
-    METADATA_PATH = 'table_keys.pkl'
+    # INDEX_PATH = 'table_index.faiss'
+    # METADATA_PATH = 'table_keys.pkl'
 
-    # Check and build if necessary
-    if not (os.path.exists(INDEX_PATH) and os.path.exists(METADATA_PATH)):
-        print("Vector store files not found. Building and saving...")
-        build_and_save_vector_store(SCHEMA_SAMPLES, INDEX_PATH, METADATA_PATH)
-    else:
-        print("Vector store files already exist. Skipping build.")
+    # # Check and build if necessary
+    # if not (os.path.exists(INDEX_PATH) and os.path.exists(METADATA_PATH)):
+    #     print("Vector store files not found. Building and saving...")
+    #     build_and_save_vector_store(SCHEMA_SAMPLES, INDEX_PATH, METADATA_PATH)
+    # else:
+    #     print("Vector store files already exist. Skipping build.")
 
-    # Load 
-    index, table_keys = load_vector_store('table_index.faiss', 'table_keys.pkl')
+    # # Load 
+    # index, table_keys = load_vector_store('table_index.faiss', 'table_keys.pkl')
 
     # Search for similar examples
     similar_examples = search_similar_examples(question, SQL_SAMPLES)
     
     # Get relevant tables
     # relevant_tables = get_relevant_tables(question, SCHEMA_SAMPLES)
-    relevant_tables =search_relevant_tables(question, index, table_keys)
+    relevant_tables =search_mongodb_tables(question, MONGO_URI, DB_NAME, COLLECTION_NAME, top_k=3)
     
     # Build the system prompt
     prompt = "# SQL Query Generation\n\n"
