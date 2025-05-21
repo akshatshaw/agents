@@ -16,7 +16,7 @@ DB_NAME = "sql_agent"
 COLLECTION_NAME = "test2"
 
 host = os.getenv("host_pgsql")
-password = os.environ("password_pgsql")
+password = os.getenv("password_pgsql")
 
 
 # df = pd.read_csv("Final_schema.csv")
