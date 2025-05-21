@@ -26,3 +26,5 @@ pandas
 openai
 numpy  
 pymongo
+psycopg2
+

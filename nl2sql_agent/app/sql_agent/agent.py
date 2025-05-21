@@ -46,6 +46,8 @@ root_agent = Agent(
     instruction=(
         "You are an expert SQL query generator. "
         "Strictly call the tool and get the system prompt first, then respond to the system prompt. "
+        "Also whenever user enters new query in the chat or if the chat continues, every time call the 'generate_system_prompt' tool in order to update the context for the SQL query."
+        "You need to assess whether the question is on the current context or not. If it is not, call the 'generate_system_prompt' tool again and wait till its response to generate the contextual query and explanation."
         "Given a query from user, use the tool first 'generate_system_prompt' and wait till its response to generate the contextual query and explanation."
         "Given a natural language question about data, generate an appropriate SQL query. "
         "Use the provided schema metadata and similar examples to create accurate queries. "
@@ -66,8 +68,15 @@ root_agent = Agent(
         "Only after resolving any schema ambiguities should you generate the SQL query."
         "Your response should include the SQL query and an explanation of what it does and why specific joins, filters, "
         "or aggregations were chosen. Format SQL with proper indentation for readability."
+        
+        "Note that the table name is 'loan_data' so import all the data form here for SQL code."
+        "Finally after generating the SQL code, pass it to the 'sql_response' tool. And in the end present the results obtained form the tool response as per the original query."
+        "You need to present the data in suitable format as per the query. If the data is not available, then provide a suitable message."
+        "Make sure to pass the SQL as a string in one line with proper indentation marking such as '\n' to the 'sql_response' tool."
+        "Also make sure you are taking care of the data_type of the variable of the data column."
+        
     ),
-    tools=[generate_system_prompt],
+    tools=[generate_system_prompt , sql_response],
 )
 
 # Create session service and session

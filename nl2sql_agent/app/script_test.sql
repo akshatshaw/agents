@@ -1,0 +1,1 @@
+SELECT CAST(SUM(CASE WHEN loan_status_type = 'Under Processing' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(*) AS percentage_under_processing FROM loan_data;

@@ -1,0 +1,70 @@
+[
+  {
+    "name": "case025d42",
+    "data": [
+      {
+        "query": "what is the percentage of loan statue type with status Under Processing ?",
+        "expected_tool_use": [
+          {
+            "tool_name": "generate_system_prompt",
+            "tool_input": {
+              "question": "what is the percentage of loan statue type with status Under Processing ?"
+            }
+          },
+          {
+            "tool_name": "sql_response",
+            "tool_input": {
+              "sql_query": "SELECT CAST(SUM(CASE WHEN loan_status_type = 'Under Processing' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(*) AS percentage_under_processing FROM loan_data;"
+            }
+          }
+        ],
+        "expected_intermediate_agent_responses": [
+          {
+            "author": "sql_query_generator",
+            "text": "The database schema contains tables related to loan status. Specifically, there are `loan_status_type` and `loan_status` tables. To calculate the percentage of loans with a status of \"Under Processing\", I need to perform the following steps:\n\n1.  Count the total number of loans.\n2.  Count the number of loans with the status \"Under Processing\".\n3.  Calculate the percentage by dividing the count of \"Under Processing\" loans by the total number of loans and multiplying by 100.\n\nTo achieve this, I need to query the `loan_data` table and filter by the appropriate status. I need to confirm what column contains the loan status. I will assume it is 'loan\\_status\\_type' column.\n\n"
+          }
+        ],
+        "reference": "The query calculates the percentage of loans with the status \"Under Processing\" from the `loan_data` table. It counts the number of loans where `loan_status_type` is 'Under Processing', divides it by the total number of loans, and multiplies by 100 to get the percentage.\n\nThe result is 0.0, meaning there are no loans with status 'Under Processing' in the table.\n"
+      }
+    ],
+    "initial_session": {
+      "state": {},
+      "app_name": "sql_agent",
+      "user_id": "user"
+    }
+  },
+  {
+    "name": "case53225d",
+    "data": [
+      {
+        "query": "what is the percentage of loan statue type with status Under Processing ?",
+        "expected_tool_use": [
+          {
+            "tool_name": "generate_system_prompt",
+            "tool_input": {
+              "question": "what is the percentage of loan statue type with status Under Processing ?"
+            }
+          },
+          {
+            "tool_name": "sql_response",
+            "tool_input": {
+              "sql_query": "SELECT CAST(SUM(CASE WHEN loan_status_type = 'Under Processing' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(*) AS percentage_under_processing FROM loan_data;"
+            }
+          }
+        ],
+        "expected_intermediate_agent_responses": [
+          {
+            "author": "sql_query_generator",
+            "text": "The database schema contains tables related to loan status. Specifically, there are `loan_status_type` and `loan_status` tables. To calculate the percentage of loans with a status of \"Under Processing\", I need to perform the following steps:\n\n1.  Count the total number of loans.\n2.  Count the number of loans with the status \"Under Processing\".\n3.  Calculate the percentage by dividing the count of \"Under Processing\" loans by the total number of loans and multiplying by 100.\n\nTo achieve this, I need to query the `loan_data` table and filter by the appropriate status. I need to confirm what column contains the loan status. I will assume it is 'loan\\_status\\_type' column.\n\n"
+          }
+        ],
+        "reference": "The query calculates the percentage of loans with the status \"Under Processing\" from the `loan_data` table. It counts the number of loans where `loan_status_type` is 'Under Processing', divides it by the total number of loans, and multiplies by 100 to get the percentage.\n\nThe result is 0.0, meaning there are no loans with status 'Under Processing' in the table.\n"
+      }
+    ],
+    "initial_session": {
+      "state": {},
+      "app_name": "sql_agent",
+      "user_id": "user"
+    }
+  }
+]

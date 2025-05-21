@@ -1,0 +1,1283 @@
+﻿Sno.,Column,Description,Remarks,Data Type
+1,loan_id,unique id for loan,,bigint
+2,customer_id,customer unique id,,bigint
+3,loan_creation_date,Should be used for date filter - lead generation,,date
+4,disbursal_month,the month loan is disbursed to the customer,,date
+5,utm_source,,"elev8_ref_prg
+elevateassigned
+valueleaf24
+martan25
+valueleaf16
+martan51
+idsa
+grad_rejected
+martan10
+rt_rej_jan23
+turtlemint
+valueleaf
+valueleaf25
+freedomassignde
+eqx_wealth
+elv8_inactivity
+ht_media
+martan23
+martan21
+marvl05
+organic
+valueleaf21
+finurl
+repeat_rejected_cb
+martan24
+valueleaf4
+lamf
+martan30
+marketingvalueleaf4
+top up
+valueleaf20
+martan15
+martan28
+limechat
+systemassignde
+fcr_rec
+repeat_rejected
+cbassignde
+undefined
+martan13
+martan55
+ht media
+credit_report
+martan8
+finayo
+valueleaf17
+cb
+martan14
+martan11
+marvl14
+google
+valueleaf5
+martan54
+valueleaf18
+martan20
+valueleaf11
+martan16
+ordertracking
+valueleaf14
+irl
+martan17
+martan19
+martan12
+martan53
+valueleaf10
+mobavenue2023
+martan26
+indialends
+elev8_cooled_off
+elev8_new_loan
+valueleaf26
+martan27
+valueleaf27
+valueleaf19
+valueleaf2stashfin
+martan22
+martan18
+martan9
+martan31
+cc_reapply
+martan29
+telegram
+valueleaf2
+mint
+valueleaf15
+martan6
+martan46
+martan7
+nehanagar
+shiprocket
+valueleaf9
+bureau_cb_assign
+hindustan_live
+hct2024
+stashfin app
+libr8_cooled_off
+abhilo",character varying
+6,original_utm_source,original source of the user,,character varying
+7,partnership_customer,,,bigint
+8,ht_media_customer,,,bigint
+9,customer_partnership,,,character varying
+10,customer_utm_type,"For breakdown by partnership, scorecard, non scorecard",,character varying
+11,age,Application input data,,double precision
+12,gender,Application input data,,character varying
+13,occupation,Application input data,,character varying
+14,product_code,code for a specific product from stashfin,,character varying
+15,loan_status,Rishabh Madaan,"1    Incomplete Application
+2    Under Processing
+3    Approved
+4    Rejected
+5    Disbursed
+6    Loan Closed
+7    Subjective Approval
+8    Facebook
+9    Case Closed
+10    Repeat Application
+11    Topup Loan
+12    Pre-approved
+13    Ready For Disbursal(Pending Co-Lender Approval)
+14    Bad Debt/ Written Off
+15    Settled
+16    Suit Filed
+17    Cancelled
+19    Incomplete-Approve
+20    Incomplete-Reject
+21    Pull-Back-Foreclosure",bigint
+16,lead_status,Rishabh Madaan,"New
+2    Phone not Picked
+3    Call Back
+4    Not Interested
+5    SENT for Bureau
+6    Bureau Approved
+7    Bureau Rejected
+8    BANK Analyze Pending
+9    Analyze Bank
+10    Loan Approved
+11    Loan Rejected
+12    Document Collection
+13    Disbursed
+14    Exception
+15    Not Eligible
+16    Bureau Done
+17    Follow Up
+18    Not Contactable
+19    Ok for Bureau
+20    Test Lead
+21    Duplicate
+22    Refer For Bureau
+23    Credit Query
+24    Bank Analysis Query
+25    Unwilling to Do Bank Analysis
+26    Refer for Bank Analysis
+27    Case Closed
+28    Reference Verification Pending
+29    References Verification Done
+30    Rejected - Case to Avoid
+31    Credit Query Response
+32    Bank Analysis Query Response
+33    Do Not Call
+34    References Not Available
+35    References Available
+36    First Contact Made
+37    Bureau ERROR
+38    Bank Analysis - Call Back
+39    Bank Analysis - Not Contactable
+40    Bank Analysis - Bank not Listed
+41    Bank Analysis - Upload Bank Statement
+42    Document Checklist Done
+43    DOC Collected
+44    Document Issues Found
+45    Document Verified
+46    Sentinal - Credit Underwriting
+47    Document Issue Resolved
+48    Approved for Disbursal
+49    Incomplete Documents Picked
+50    Initiate Document Collection
+51    Credit Query Resolved
+52    Credit Query Unresolved - End
+53    Bureau Analyzed
+54    Reference Data Not Correct
+55    Unwilling to Give References
+56    Approved but Not Interested
+57    References Not Contactable
+58    Sentinal - Approve
+59    Documents not Available with Clients
+60    Rejected for Disbursal
+61    Pending for Credit Revision
+62    Doc Query Resolved
+63    Doc Query
+64    Sent for Doc pickup
+65    Doc Request
+66    Initiate Document Pickup
+67    Disbursal Sheet Query
+68    Disbursal Sheet Query Resolved
+69    Ready for Disbursal 
+70    LOC Pending
+71    Pending for card registration
+72    Bureau Report Fetched
+73    Another Bureau Pull
+74    Loan Revision Required
+75    Revised Approval
+76    Pendency
+77    Pendency Resolved
+78    Pending Credit Query
+79    Bank Analysis Done - Email ID not verified
+80    LOC Requested
+81    Co-lender Pre-Approved
+82    Co-lender - Ready for Disbursal
+83    Transferred To Ops for Disbursal (AKARA)
+84    Transferred To Ops for Disbursal (CO-Lender)
+85    DE Decision Pending
+86    Co-Lender Pre-Approved-LOC
+87    Co-lender - Ready for Disbursal(DMI)
+88    Case Closed - Pendency
+89    Disbursal Pending Razorpay
+90    Disbursal Error Razorpay
+91    DE Running
+92    DE Pending repeat
+93    Elev8 approval pending
+94    Re-Run Decision Engine
+95    Disbursal Pending Razorpay - Checker
+96    Disbursal Approved by Checker
+97    Pan Validation Failed
+98    RFD_Hold
+99    Pending Bank Verification
+100    Bank Document Issues Found
+101    Bank Document Approved
+102    Bank Document Rejected
+103    Sentinal - Journey Pending
+104    Bank Analysis done (Docs Not uploaded)
+105    Re-Run PAN Validation
+106    elev8_Inactivity
+107    IMPS/NEFT Failed Co-lender
+108    Elev8 App Download Pending
+109    Banking Done - Elev8
+110    Banking Done - KYC pending
+111    Elev8 Enach Pending
+113    Incomplete - Reject
+114    Incomplete - Approve
+115    Pending KYC - 2nd Check
+116    Pending KYC - 3rd Check
+117    LOC Increased
+118    Invalid Aadhaar
+120    Grad BE
+121    Bureau Done - KYC pending
+122    Dedupe RFD
+123    Disbursal Pending - Fund Transferred
+124    Disbursal Pending - Transfer Pending by Bank
+125    Disbursed - Transfer Pending by Bank
+126    Transfer Declined - IMPS
+127    Pending Processing Fee
+128    Pending Transfer
+129    Pending LOC-Open
+130    lib_Inactivity
+131    Fraud-Analyze Bank
+132    Manual Deviation
+133    Aadhar Verification
+134    Pending login
+135    CPV Pending
+136    Hold Geo Taging
+137    CB Rejected",bigint
+17,loan_status_type,To be used for filtering,"Rejected 
+Cancelled 
+Under Processing 
+Loan Closed 
+Disbursed 
+Approved 
+Incomplete Application 
+Case Closed 
+Topup Loan",character varying
+18,lead_status_type,To be used for filtering,"Loan Approved
+Rejected for Disbursal
+Bureau Done
+Manual Deviation
+Bureau Done - KYC pending
+LOC Pending
+Banking Done - KYC pending
+Bank Analysis done (Docs Not uploaded)
+Approved for Disbursal
+Not Interested
+BANK Analyze Pending
+Not Eligible
+New
+Credit Query
+Pending login
+Pending Transfer
+Pendency
+Bureau Approved
+LOC Requested
+lib_Inactivity
+Bureau ERROR
+SENT for Bureau
+Disbursed
+Loan Rejected
+Case Closed
+Duplicate
+Analyze Bank",character varying
+19,loan_approval_date,Date of lead approval,,date
+20,is_approved,"1 if approved else 0, used for approval ratio",,bigint
+21,sd_approved_flag,1 if lead was approved on the same day as loan_creation_date,,bigint
+22,loan_disbursal_date,,,date
+23,is_disbursed,1 if disbursed else 0,,bigint
+24,approved_amount,in rupees,,double precision
+25,approved_tenure,in months,,character varying
+26,approved_rate,percentage value of monthly rate,,double precision
+27,disbursal_amount,in rupees,,bigint
+28,report_id,Foreign key to be used with sttash_website_live.bureau_report_detail for bureau pull,,double precision
+29,bureau_create_date,bureau score,,date
+30,bureau_id,,,double precision
+31,bureau_score,,,double precision
+32,dpd_12_months,last 12 months - days past due - actual value number of days,,double precision
+33,cibil_report_id,,,double precision
+34,cibil_create_date,,,date
+35,cibil_score,,,double precision
+36,segment,,"H1 , H2 => Grade",character varying
+37,segment_cibil,,,character varying
+38,bre_type,Rishabh Madaan,,character varying
+39,new_customer_segment,A1 to A5 customer segment breakdown,,double precision
+40,scorecard_approval_policy,Policy number if approved through scorecard engine,,double precision
+41,crif_score,,,double precision
+42,decile,CRIF model decile if approved through scorecard,,double precision
+43,is_banking_scorecard,flag ,,bigint
+44,is_banking_non_scorecard,flag,,bigint
+45,pin_rej_stage,rejection stage code,,character varying
+46,pin_rej_substage,rejection sustage code,,character varying
+47,pincode_rej_reason,reasons ,,character varying
+48,age_rej_stage,age rejection code,,character varying
+49,age_rej_substage,age rejection substage code,,character varying
+50,age_rej_reason,reasons ,,character varying
+51,bureau_rej_stage,same,,character varying
+52,bureau_rej_substage,same,,character varying
+53,bureau_rej_reason,same,,character varying
+54,gating_pass,Flag - used to filter for customers who have passed minimum criteria and are in non-blocked pincode areas.,,bigint
+55,arz_passed,1 if passed else 0,,bigint
+56,bnd_passed,1 if passed else 0,,bigint
+57,deo_passed,1 if passed else 0,,bigint
+58,jud_passed,1 if passed else 0,,bigint
+59,chi_passed,1 if passed else 0,,bigint
+60,chr_passed,1 if passed else 0,,bigint
+61,scmal_passed,1 if passed else 0,,bigint
+62,mal_passed,1 if passed else 0,,bigint
+63,cib_passed,1 if passed else 0,,bigint
+64,arz_rejected,1 if rejected else 0,,bigint
+65,bnd_rejected,1 if rejected else 0,,bigint
+66,deo_rejected,1 if rejected else 0,,bigint
+67,jud_rejected,1 if rejected else 0,,bigint
+68,chi_rejected,1 if rejected else 0,,bigint
+69,chr_rejected,1 if rejected else 0,,bigint
+70,scmal_applied,1 if applied else 0,,bigint
+71,scmal_rejected,1 if rejected else 0,,bigint
+72,mal_applied,1 if applied else 0,,bigint
+73,mal_rejected,1 if rejected else 0,,bigint
+74,cib_rejected,1 if rejected else 0,,bigint
+75,count_active_pl,Bureau feature of the lead,,bigint
+76,count_active_cc,Bureau feature of the lead,,bigint
+77,count_active_auto,Bureau feature of the lead,,bigint
+78,count_active_hl,Bureau feature of the lead,,bigint
+79,outstanding_amt_active_pl,Bureau feature of the lead,,double precision
+80,outstanding_amt_active_cc,Bureau feature of the lead,,double precision
+81,outstanding_amt_active_auto,Bureau feature of the lead,,double precision
+82,outstanding_amt_active_hl,Bureau feature of the lead,,double precision
+83,outstanding_amt_active_secured,Bureau feature of the lead,,double precision
+84,outstanding_amt_active_unsecured,Bureau feature of the lead,,double precision
+85,max_pl_closed_limit_2yrs,Bureau feature of the lead,,double precision
+86,max_active_cc_limit,Bureau feature of the lead,,double precision
+87,bureau_age,Bureau feature of the lead,,double precision
+88,leverage,Bureau feature of the lead,,character varying
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
