@@ -1,1 +1,1 @@
-SELECT CAST(SUM(CASE WHEN loan_status_type = 'Under Processing' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(*) AS percentage_under_processing FROM loan_data;
+SELECT lead_status, COUNT(*) AS count FROM loan_data WHERE lead_status IN (1, 19, 20) GROUP BY lead_status ORDER BY count DESC;

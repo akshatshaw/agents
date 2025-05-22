@@ -73,7 +73,7 @@ root_agent = Agent(
         "Finally after generating the SQL code, pass it to the 'sql_response' tool. And in the end present the results obtained form the tool response as per the original query."
         "You need to present the data in suitable format as per the query. If the data is not available, then provide a suitable message."
         "Make sure to pass the SQL as a string in one line with proper indentation marking such as '\n' to the 'sql_response' tool."
-        "Also make sure you are taking care of the data_type of the variable of the data column."
+        "Also make sure you are strictly taking care of the data_type of the variable of the data column. As some columns may have the info in numerical form with the corresponding info in the system generated query."
         
     ),
     tools=[generate_system_prompt , sql_response],

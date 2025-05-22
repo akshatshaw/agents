@@ -4,7 +4,7 @@ import asyncio
 import os
 from dotenv import load_dotenv
 import psycopg2
-
+from samples import SQL_SAMPLES
 load_dotenv()
 from typing import List, Dict, Any
 # from vector_store import load_vector_store, build_and_save_vector_store, embedder
@@ -34,29 +34,6 @@ password = os.getenv("password_pgsql")
 #         'description': table_description,
 #         'column_details': group.to_dict(orient='records')
 #     } 
-
-
-SQL_SAMPLES = [
-    {
-        "question": "Find all users who registered in the last month",
-        "sql": "SELECT user_id, name, email FROM users WHERE registration_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH)"
-    },
-    {
-        "question": "Count the number of orders by status",
-        "sql": "SELECT status, COUNT(*) as count FROM orders GROUP BY status ORDER BY count DESC"
-    },
-    {
-        "question": "Find the top 5 products by sales revenue",
-        "sql": """
-        SELECT p.product_id, p.name, SUM(o.quantity * o.price) as revenue
-        FROM order_items o
-        JOIN products p ON o.product_id = p.product_id
-        GROUP BY p.product_id, p.name
-        ORDER BY revenue DESC
-        LIMIT 5
-        """
-    }
-]
 
 
 CUSTOM_INSTRUCTIONS = """
@@ -164,7 +141,7 @@ def search_mongodb_tables(query: str, mongo_uri: str, db_name: str, collection_n
                 "table_name": 1,
                 "data_type": 1,
                 "description": 1,
-                "columns": 1,
+                # "columns": 1,  # Add this line if you want to include columns
                 "score": {"$meta": "vectorSearchScore"}
             }
         }
@@ -228,7 +205,7 @@ def generate_system_prompt(question: str) -> str:
     
     # Get relevant tables
     # relevant_tables = get_relevant_tables(question, SCHEMA_SAMPLES)
-    relevant_tables =search_mongodb_tables(question, MONGO_URI, DB_NAME, COLLECTION_NAME, top_k=3)
+    relevant_tables =search_mongodb_tables(question, MONGO_URI, DB_NAME, COLLECTION_NAME, top_k=5)
     
     # Build the system prompt
     prompt = "# SQL Query Generation\n\n"
@@ -243,15 +220,16 @@ def generate_system_prompt(question: str) -> str:
     
     # Add relevant schema information
     prompt += "## Relevant Database Schema\n"
-    prompt += f"### Table, Description and Columns: {relevant_tables}\n"
+    prompt += "_________________________\n"
+    prompt += f"### Table, Description and Columns:\n"
     
-    # for table_name, table_info in relevant_tables.items():
-    #     prompt += f"### Table, Description and Columns: {table_name}\n"
-        # # prompt += f"Description: {table_info['description']}\n"
-        # prompt += "Columns:\n"
-        # for column in table_info['columns']:
+    for items in relevant_tables:
+        prompt += f"### Table, Description and Columns: {items['table_name']}\n"
+        prompt += f"Description: {items['description']}\n"
+        prompt += f"Data_type: {items['data_type']}\n"
+        # for column in items['data_type']:
         #     prompt += f"- {column}\n"
-        # prompt += "\n"
+        prompt += "\n"
     
     # Add custom instructions
     prompt += "## Custom Instructions\n"
